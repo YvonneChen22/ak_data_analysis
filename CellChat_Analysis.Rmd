@@ -6,4 +6,19 @@ output: github_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(spacexr)
+library(Seurat)
+library(ggplot2) #for saving result plots
+library(CellChat)
+library(patchwork)
+library(SeuratData)
+library(dplyr)
+library(purrr)
+library(hdf5r)
+library(glmGamPoi)
+options(stringsAsFactors = FALSE)
+ptm = Sys.time()
 ```
+
+
+
