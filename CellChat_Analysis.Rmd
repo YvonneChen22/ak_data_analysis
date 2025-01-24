@@ -20,5 +20,144 @@ options(stringsAsFactors = FALSE)
 ptm = Sys.time()
 ```
 
+# AK1
+## Part I: Data input & processing and initialization of CellChat object
+### Load single cell data from Cell Ranger output directory
+```{r}
+ak1<- Load10X_Spatial(data_dir <- './data/ak1', 
+                         filename = "filtered_feature_bc_matrix.h5")
+
+
+plot1 <- VlnPlot(ak1, features = "nCount_Spatial", pt.size = 0.1) + NoLegend()
+plot2 <- SpatialFeaturePlot(ak1, features = "nCount_Spatial") + theme(legend.position = "right")
+plot2
+```
+
+### Data preprocessing: normalization
+```{r}
+ak1 = ak1[,unname(which(colSums(GetAssayData(ak1))!=0))]
+
+ak1 <- SCTransform(ak1, assay = "Spatial", verbose = FALSE)
+```
+
+### Dimensionality reduction, clustering, and visualization
+```{r}
+ak1 <- RunPCA(ak1, assay = "SCT", verbose = FALSE)
+ak1 <- FindNeighbors(ak1, reduction = "pca", dims = 1:30)
+ak1 <- FindClusters(ak1, verbose = FALSE)
+ak1 <- RunUMAP(ak1, reduction = "pca", dims = 1:30)
+
+color.use <- scPalette(nlevels(ak1)); names(color.use) <- levels(ak1)
+Idents(ak1) <- factor(Idents(ak1), levels = levels(Idents(ak1)), labels = c("1", "2", "3", "4", "5", "6", "7"))
+Seurat::SpatialDimPlot(ak1, label = T, label.size = 3, cols = color.use, pt.size.factor = 3)
+```
+
+### Prepare input data for CelChat analysis
+```{r}
+data.input1 = Seurat::GetAssayData(ak1, slot = "data", assay = "SCT")
+```
+
+### define the meta data
+```{r}
+meta1 = data.frame(labels = Seurat::Idents(ak1), slices = "slice1", row.names = names(Seurat::Idents(ak1))) # manually create a dataframe consisting of the cell labels
+meta1$slices <- factor(meta1$slices)
+unique(meta1$labels) # check the cell labels
+unique(meta1$slices)
+```
+
+### load spatial transcriptomics information
+```{r}
+spatial.locs1 = Seurat::GetTissueCoordinates(ak1, scale = NULL, cols = c("imagerow", "imagecol")) 
+spatial.locs1 <- spatial.locs1[, !colnames(spatial.locs1) %in% "cell"]
+```
+
+### Scale factors of spatial coordinates
+```{r}
+scalefactors1 = jsonlite::fromJSON('{"regist_target_img_scalef": 1.0, "tissue_hires_scalef": 0.6666667, "tissue_lowres_scalef": 0.2, "fiducial_diameter_fullres": 22.741010123623237, "spot_diameter_fullres": 15.160673415748823}')
+spot.size = 65 # the theoretical spot size (um) in 10X Visium
+conversion.factor1 = spot.size/scalefactors1$spot_diameter_fullres
+spatial.factors1 = data.frame(ratio = conversion.factor1, tol = spot.size/2)
+```
+
+### Create a CellChat object
+```{r}
+cellchat1 <- createCellChat(object = data.input1, meta = meta1, group.by = "labels",
+                           datatype = "spatial", coordinates = spatial.locs1, spatial.factors = spatial.factors1)
+
+```
+
+### Set the ligand-receptor interaction database
+```{r}
+CellChatDB <- CellChatDB.human
+showDatabaseCategory(CellChatDB)
+cellchat1@DB <- CellChatDB
+```
+
+### Preprocessing the expression data for cell-cell communication analysis
+```{r}
+cellchat1 <- subsetData(cellchat1)
+future::plan("multisession", workers = 4) 
+cellchat1 <- identifyOverExpressedGenes(cellchat1)
+cellchat1 <- identifyOverExpressedInteractions(cellchat1)
+execution.time = Sys.time() - ptm
+print(as.numeric(execution.time, units = "secs"))
+```
+
+## Part II: Inference of cell-cell communication network
+```{r}
+ptm = Sys.time()
+
+cellchat1 <- computeCommunProb(cellchat1, type = "truncatedMean", trim = 0.1, 
+                              distance.use = TRUE, interaction.range = 250, scale.distance = 0.01,
+                              contact.dependent = TRUE, contact.range = 100)
+```
+
+### Filter out the cell-cell communication if there are only few number of cells in certain cell groups
+```{r}
+cellchat1 <- filterCommunication(cellchat1, min.cells = 10)
+```
+
+### Extract the inferred cellular communication network as a data frame
+```{r}
+df.net1 <- subsetCommunication(cellchat1)
+```
+
+### Infer the cell-cell communication at a signaling pathway level
+```{r}
+cellchat1 <- computeCommunProbPathway(cellchat1)
+```
+
+### Calculate the aggregated cell-cell communication network 
+```{r}
+cellchat1 <- aggregateNet(cellchat1)
+
+execution.time = Sys.time() - ptm
+print(as.numeric(execution.time, units = "secs"))
+
+ptm = Sys.time()
+
+groupSize <- as.numeric(table(cellchat1@idents))
+par(mfrow = c(1,2), xpd=TRUE)
+netVisual_circle(cellchat1@net$count, vertex.weight = rowSums(cellchat1@net$count), weight.scale = T, label.edge= F, title.name = "Number of interactions")
+netVisual_circle(cellchat1@net$weight, vertex.weight = rowSums(cellchat1@net$weight), weight.scale = T, label.edge= F, title.name = "Interaction weights/strength")
+
+netVisual_heatmap(cellchat1, measure = "count", color.heatmap = "Blues")
+netVisual_heatmap(cellchat1, measure = "weight", color.heatmap = "Blues")
+
+# sub-dataset
+df.net_c16 <- subsetCommunication(cellchat1, sources.use = "2", targets.use = "1") ##gives the inferred cell-cell communications sending from cell groups 2 (dermis) to cell groups 1 (dysplastic).
+df.net_c61 <- subsetCommunication(cellchat1, sources.use = "1", targets.use = "2") ##gives the inferred cell-cell communications sending from cell groups 1 (dysplastic) to cell groups 2 (dermis).
+```
+
+## Visualize cell-cell communication mediated by multiple ligand-receptors or signaling pathways
+### Bubble plot
+(1) show all the significant interactions (L-R pairs) from some cell groups (defined by 'sources.use') to other cell groups (defined by 'targets.use')
+```{r}
+par(mfrow=c(1,1))
+netVisual_bubble(cellchat1, sources.use = "2", targets.use = c("1":"6"), remove.isolate = FALSE, dot.size.min = 5, dot.size.max = 10, font.size = 17, grid.on = TRUE, color.grid = "black")
+netVisual_bubble(cellchat1, sources.use = "1", targets.use = c("1":"6"), remove.isolate = FALSE, dot.size.min = 5, dot.size.max = 10, font.size = 17, grid.on = TRUE, color.grid = "black")
+```
+
+
 
 
