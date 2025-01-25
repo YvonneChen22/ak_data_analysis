@@ -1,0 +1,129 @@
+{\rtf1\ansi\ansicpg936\cocoartf2820
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fswiss\fcharset0 Helvetica-Bold;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww16400\viewh12160\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0         yvonne@XPS-8950:~$ cat ~/.bash_history\
+ls\
+mkdir spaceranger_tutorial\
+ls\
+cd spaceranger_tutorial\
+curl -o spaceranger-2.1.0.tar.gz "https://cf.10xgenomics.com/releases/spatial-exp/spaceranger-2.1.0.tar.gz?Expires=1692758510&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=RteqZ6vTm-l~V9-RBEKwJuEDAc4RLBuWsXlaywghgHmfs9YnbD86fOaruTb9---Cesa4hu~ng8sbpKknka9FJ1X05h8ZB2qzy6tCiFxjsdaYAVDp-86Bvmy1C79yoWkiR9uyMvix9jpkH-RMmrySKl6Noezl45FyrYaA7Scyfrk2ne~a-ujsipIFh2faoTtVm8j3fdi8ptmm9OtAWUDQDikCuk7Edvax0E~eJZQ8bUcSx0PKv5Q7RwXz7Gd5iqU5ity1yRxxiZOWdPWzRqYlVjE5j7ISFlOSWCj0tLwpdJLaU6BOPfrASF-feAc2S4tcaXgEH60psoOG7zjLAsqyzw__"\
+ls\
+tar -zxvf spaceranger-2.1.0.tar.gz\
+ls\
+rm spaceranger-2.1.0.tar.gz\
+ls\
+cd spaceranger-2.1.0\
+pwd\
+cd ..\
+
+\f1\b cd spaceranger-2.1.0\
+export PATH=$PWD:$PATH\
+which spaceranger\
+cd ..\
+spaceranger
+\f0\b0 \
+mkdir datasets\
+cd datasets\
+cd ..\
+cd Downloads\
+ls\
+mv Visium_Human_Transcriptome_Probe_Set_v2.0_GRCh38-2020-A.csv ~/spaceranger_tutorial\
+ls\
+mv refdata-gex-GRCh38-2020-A ~/spaceranger-tutorial\
+cd ..\
+cd spaceranger_tutorial\
+ls\
+cd ..\
+ls\
+cd spaceranger-tutorial\
+ls\
+cd ..\
+rm -r spaceranger-tutorial\
+mv ~/Downloads/refdata-gex-GRCh38-2020-A ~/spaceranger_tutorial\
+cd spaceranger_tutorial\
+ls\
+rm refdata-gex-mm10-2020-A\
+rm -r refdata-gex-mm10-2020-A\
+ls                                                                          \
+spaceranger count --id="Visium_FFPE_Human_Skin_sample_01" --description="Adult Human Skin (FFPE) sample 1 using Human Probe Set" --transcriptome=refdata-gex-GRCh38-2020-A --probe-set=Visium_Human_Transcriptome_Probe_Set_v2.0_GRCh38-2020-A.csv --fastqs=datasets/sample_01/fastqs_01 --cytaimage=datasets/sample_01/OYV01.tif --slide=V43J30-345 --area=A1 --reorient-images=false --localcores=16 --localmem=128\
+cd datasets\
+cd sample_02\
+ls\
+mkdir fastqs_02\
+ls\
+mv OYV02_S2_L003_I1_001.fastq fastqs_02\
+mv OYV02_S2_L003_I2_001.fastq fastqs_02\
+mv OYV02_S2_L003_R2_001.fastq fastqs_02\
+mv OYV02_S2_L003_R1_001.fastq fastqs_02\
+ls\
+cd fastqs_02\
+ls\
+cd ..\
+cd datasets\
+cd sample_02\
+cd fastqs_02\
+ls\
+cd ~\
+cd /spaceranger_tutorial/datasets/sample_02/fastqs_02\
+cd ~\
+cd datasets/sample_02/fastqs_02\
+ls\
+cd sample_02\
+cd ..\
+ls\
+cd ..\
+spaceranger count --id="Visium_FFPE_Human_Skin_sample_02" > --description="Adult Human Skin (FFPE) sample 2 using Human Probe Set" > --transcriptome=refdata-gex-GRCh38-2020-A > --probe-set=Visium_Human_Transcriptome_Probe_Set_v2.0_GRCh38-2020-A.csv > --fastqs=datasets/sample_02/fastqs_02 > --cytaimage=datasets/sample_02/OYV02.tif > --slide=V43J30-345 > --area=D1 > --reorient-images=false > --localcores=16 > --localmem=128\
+cd datasets/sample_01\
+ls\
+cd fastqs_1\
+cd fastqs_01\
+ls\
+cd ..\
+ls\
+cd sample_03\
+ls\
+mkdir fastqs_03\
+ls\
+mv OYV03_S3_L003_I1_001.fastq fastqs_03\
+mv OYV03_S3_L003_I2_001.fastq fastqs_03\
+mv OYV03_S3_L003_R2_001.fastq fastqs_03\
+mv OYV03_S3_L003_12_001.fastq fastqs_03\
+mv OYV03_S3_L003_R1_001.fastq fastqs_03\
+ls\
+cd fasts_03\
+cd fastqs_03\
+ls\
+cd ..\
+spaceranger count --id="Visium_FFPE_Human_Skin_sample_03" > --description="Adult Human Skin (FFPE) sample 3 using Human Probe Set" > --transcriptome=refdata-gex-GRCh38-2020-A > --probe-set=Visium_Human_Transcriptome_Probe_Set_v2.0_GRCh38-2020-A.csv > --fastqs=datasets/sample_03/fastqs_03 > --cytaimage=datasets/sample_03/OYV03.tif > --slide=V43J23-091 > --area=A1 > --reorient-images=false > --localcores=16 > --localmem=128\
+spaceranger count --id="Visium_FFPE_Human_Skin_sample_01" > --description="Adult Human Skin (FFPE) sample 1 using Human Probe Set" > --transcriptome=refdata-gex-GRCh38-2020-A > --probe-set=Visium_Human_Transcriptome_Probe_Set_v2.0_GRCh38-2020-A.csv > --fastqs=datasets/sample_01/fastqs_01 > --cytaimage=datasets/sample_01/OYV01.tif > --slide=V43J30-345 > --area=A1 > --reorient-images=false > --localcores=16 > --localmem=128\
+spaceranger count --id="Visium_FFPE_Human_Skin_Sample_01"           --description="Adult Human Skin (FFPE) sample 2 using Human Probe Set"           --transcriptome=refdata-gex-GRCh38-2020-A           --probe-set=Visium_Human_Transcriptome_Probe_Set_v2.0_GRCh38-2020-A.csv           --fastqs=datasets/sample_02/fastqs_02           --cytaimage=datasets/sample_02/OYV01.tif           --slide=V43J30-345           --area=D1           --reorient-images=false           --localcores=16           --localmem=128\
+cd datasets\
+cd sample_04\
+ls\
+mkdir fastqs_04\
+ls\
+mv OYV04_S4_L003_I1_001.fastq fastqs_04\
+mv OYV04_S4_L003_I2_001.fastq fastqs_04\
+mv OYV04_S4_L003_R2_001.fastq fastqs_04\
+mv OYV04_S4_L003_R1_001.fastq fastqs_04\
+ls\
+cd ..\
+spaceranger count --id="Visium_FFPE_Human_Skin_sample_01_reorient" --description="Adult Human Skin (FFPE) sample 1 using Human Probe Set" --transcriptome=refdata-gex-GRCh38-2020-A --probe-set=Visium_Human_Transcriptome_Probe_Set_v2.0_GRCh38-2020-A.csv --fastqs=datasets/sample_01/fastqs_01 --cytaimage=datasets/sample_01/OYV01.tif --slide=V43J30-345 --loupe-alignment=datasets/sample_01/V43J30-345-A1.json --area=A1 --localcores=16 --localmem=128\
+spaceranger count --id="Visium_FFPE_Human_Skin_sample_04" --description="Adult Human Skin (FFPE) sample 4 using Human Probe Set" --transcriptome=refdata-gex-GRCh38-2020-A --probe-set=Visium_Human_Transcriptome_Probe_Set_v2.0_GRCh38-2020-A.csv --fastqs=datasets/sample_04/fastqs_04 --cytaimage=datasets/sample_04/OYV04.tif --slide=V43J23-091 --area=D1 --localcores=16 --localmem=128\
+spaceranger count --id="Visium_FFPE_Human_Skin_sample_02_alignment" --description="Adult Human Skin (FFPE) sample 2 using Human Probe Set" --probe-set=Visium_Human_Transcriptome_Probe_Set_v2.0_GRCh38-2020-A.csv --transcriptome=refdata-gex-GRCh38-2020-A --fastqs=datasets/sample_02/fastqs_02 --cytaimage=datasets/sample_02/OYV02.tif --slide=V43J30-345 --loupe-alignment=datasets/sample_02/V43J30-345-D1.json --area=D1 --localcores=16 --localmem=128\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 spaceranger count --id="Visium_FFPE_Human_Skin_sample_05\'94 > --description="Adult Human Skin (FFPE) sample 5 using Human Probe Set" > --transcriptome=refdata-gex-GRCh38-2020-A > --probe-set=Visium_Human_Transcriptome_Probe_Set_v2.0_GRCh38-2020-A.csv > --fastqs=datasets/sample_05/fastqs_05 > --cytaimage=datasets/sample_05/OYV05.tif > --slide=V43J23-090 > --area=D1 > --reorient-images=false > --localcores=16 > --localmem=128\
+\
+spaceranger count --id="Visium_FFPE_Human_Skin_sample_06\'94 > --description="Adult Human Skin (FFPE) sample 6 using Human Probe Set" > --transcriptome=refdata-gex-GRCh38-2020-A > --probe-set=Visium_Human_Transcriptome_Probe_Set_v2.0_GRCh38-2020-A.csv > --fastqs=datasets/sample_06/fastqs_06 > --cytaimage=datasets/sample_06/OY06.tif > --slide=V43J23-090 > --area=A1 > --reorient-images=false > --localcores=16 > --localmem=128\
+\
+spaceranger count --id="Visium_FFPE_Human_Skin_sample_07\'94 > --description="Adult Human Skin (FFPE) sample 7 using Human Probe Set" > --transcriptome=refdata-gex-GRCh38-2020-A > --probe-set=Visium_Human_Transcriptome_Probe_Set_v2.0_GRCh38-2020-A.csv > --fastqs=datasets/sample_07/fastqs_07 > --cytaimage=datasets/sample_07/OY07.tif > --slide=V43J23-042 > --area=D1 > --reorient-images=false > --localcores=16 > --localmem=128\
+\
+spaceranger count --id="Visium_FFPE_Human_Skin_sample_08\'94 > --description="Adult Human Skin (FFPE) sample 8 using Human Probe Set" > --transcriptome=refdata-gex-GRCh38-2020-A > --probe-set=Visium_Human_Transcriptome_Probe_Set_v2.0_GRCh38-2020-A.csv > --fastqs=datasets/sample_08/fastqs_08 > --cytaimage=datasets/sample_08/OY08.tif > --slide=V43J23-042 > --area=A1 > --reorient-images=false > --localcores=16 > --localmem=128\
+\
+spaceranger count --id="Visium_FFPE_Human_Skin_sample_07_alignment" --description="Adult Human Skin (FFPE) sample 2 using Human Probe Set" --probe-set=Visium_Human_Transcriptome_Probe_Set_v2.0_GRCh38-2020-A.csv --transcriptome=refdata-gex-GRCh38-2020-A --fastqs=datasets/sample_07/fastqs_07 --cytaimage=datasets/sample_07/OY07.tif --slide=V43J23-042 --loupe-alignment=datasets/sample_02/V43J23-042-D1.json --area=D1 --localcores=16 --localmem=128\
+}
