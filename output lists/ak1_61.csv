@@ -1,0 +1,3 @@
+"source","target","ligand","receptor","prob","pval","interaction_name","interaction_name_2","pathway_name","annotation","evidence"
+1,2,"MIF","CD74_CD44",0.00129035587647112,0,"MIF_CD74_CD44","MIF - (CD74+CD44)","MIF","Secreted Signaling","PMID: 29637711; PMID: 26175090"
+1,2,"APP","CD74",0.000826714657250218,0,"APP_CD74","APP - CD74","APP","Cell-Cell Contact","PMID: 19849849"
