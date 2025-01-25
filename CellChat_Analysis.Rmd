@@ -145,8 +145,8 @@ netVisual_heatmap(cellchat1, measure = "count", color.heatmap = "Blues")
 netVisual_heatmap(cellchat1, measure = "weight", color.heatmap = "Blues")
 
 # sub-dataset
-df.net_c16 <- subsetCommunication(cellchat1, sources.use = "2", targets.use = "1") ##gives the inferred cell-cell communications sending from cell groups 2 (dermis) to cell groups 1 (dysplastic).
-df.net_c61 <- subsetCommunication(cellchat1, sources.use = "1", targets.use = "2") ##gives the inferred cell-cell communications sending from cell groups 1 (dysplastic) to cell groups 2 (dermis).
+df.net_c12 <- subsetCommunication(cellchat1, sources.use = "2", targets.use = "1") ##gives the inferred cell-cell communications sending from cell groups 2 (dermis) to cell groups 1 (dysplastic).
+df.net_c21 <- subsetCommunication(cellchat1, sources.use = "1", targets.use = "2") ##gives the inferred cell-cell communications sending from cell groups 1 (dysplastic) to cell groups 2 (dermis).
 ```
 
 ## Visualize cell-cell communication mediated by multiple ligand-receptors or signaling pathways
@@ -287,8 +287,8 @@ netVisual_heatmap(cellchat2, measure = "count", color.heatmap = "Blues")
 netVisual_heatmap(cellchat2, measure = "weight", color.heatmap = "Blues")
 
 # sub-dataset
-df.net_c21 <- subsetCommunication(cellchat2, sources.use = "2", targets.use = "1") ##gives the inferred cell-cell communications sending from cell groups 2 (dermis) to cell groups 1 (dysplastic).
-df.net_c12 <- subsetCommunication(cellchat2, sources.use = "1", targets.use = "2") ##gives the inferred cell-cell communications sending from cell groups 1 (dysplastic) to cell groups 2 (dermis).
+df.net_c51 <- subsetCommunication(cellchat2, sources.use = "5", targets.use = "1") ##gives the inferred cell-cell communications sending from cell groups 5 (dermis) to cell groups 1 (dysplastic).
+df.net_c15 <- subsetCommunication(cellchat2, sources.use = "1", targets.use = "5") ##gives the inferred cell-cell communications sending from cell groups 1 (dysplastic) to cell groups 5 (dermis).
 ```
 
 ## Visualize cell-cell communication mediated by multiple ligand-receptors or signaling pathways
@@ -296,7 +296,7 @@ df.net_c12 <- subsetCommunication(cellchat2, sources.use = "1", targets.use = "2
 (1) show all the significant interactions (L-R pairs) from some cell groups (defined by 'sources.use') to other cell groups (defined by 'targets.use')
 ```{r}
 par(mfrow=c(1,1))
-netVisual_bubble(cellchat2, sources.use = "2", targets.use = c("1":"8"), remove.isolate = FALSE, dot.size.min = 5, dot.size.max = 10, font.size = 17, grid.on = TRUE, color.grid = "black")
+netVisual_bubble(cellchat2, sources.use = "5", targets.use = c("1":"8"), remove.isolate = FALSE, dot.size.min = 5, dot.size.max = 10, font.size = 17, grid.on = TRUE, color.grid = "black")
 netVisual_bubble(cellchat2, sources.use = "1", targets.use = c("1":"8"), remove.isolate = FALSE, dot.size.min = 5, dot.size.max = 10, font.size = 17, grid.on = TRUE, color.grid = "black")
 ```
 
