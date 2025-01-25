@@ -71,27 +71,27 @@ ak1 <- RunUMAP(ak1, reduction = "pca", dims = 1:30)
     ## To use Python UMAP via reticulate, set umap.method to 'umap-learn' and metric to 'correlation'
     ## This message will be shown once per session
 
-    ## 09:03:01 UMAP embedding parameters a = 0.9922 b = 1.112
+    ## 16:07:56 UMAP embedding parameters a = 0.9922 b = 1.112
 
-    ## 09:03:01 Read 1419 rows and found 30 numeric columns
+    ## 16:07:56 Read 1419 rows and found 30 numeric columns
 
-    ## 09:03:01 Using Annoy for neighbor search, n_neighbors = 30
+    ## 16:07:56 Using Annoy for neighbor search, n_neighbors = 30
 
-    ## 09:03:01 Building Annoy index with metric = cosine, n_trees = 50
+    ## 16:07:56 Building Annoy index with metric = cosine, n_trees = 50
 
     ## 0%   10   20   30   40   50   60   70   80   90   100%
 
     ## [----|----|----|----|----|----|----|----|----|----|
 
     ## **************************************************|
-    ## 09:03:02 Writing NN index file to temp file /var/folders/nn/sjw17z350nbdmc7_r811zv4m0000gn/T//RtmpkqRb7F/fileed9a1038f0bb
-    ## 09:03:02 Searching Annoy index using 1 thread, search_k = 3000
-    ## 09:03:02 Annoy recall = 100%
-    ## 09:03:02 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-    ## 09:03:02 8 smooth knn distance failures
-    ## 09:03:03 Initializing from normalized Laplacian + noise (using RSpectra)
-    ## 09:03:03 Commencing optimization for 500 epochs, with 58354 positive edges
-    ## 09:03:06 Optimization finished
+    ## 16:07:56 Writing NN index file to temp file /var/folders/nn/sjw17z350nbdmc7_r811zv4m0000gn/T//Rtmp1eyeo6/filefc4013eb1d48
+    ## 16:07:56 Searching Annoy index using 1 thread, search_k = 3000
+    ## 16:07:56 Annoy recall = 100%
+    ## 16:07:56 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+    ## 16:07:56 8 smooth knn distance failures
+    ## 16:07:57 Initializing from normalized Laplacian + noise (using RSpectra)
+    ## 16:07:57 Commencing optimization for 500 epochs, with 58354 positive edges
+    ## 16:08:00 Optimization finished
 
 ``` r
 color.use <- scPalette(nlevels(ak1)); names(color.use) <- levels(ak1)
@@ -196,7 +196,7 @@ execution.time = Sys.time() - ptm
 print(as.numeric(execution.time, units = "secs"))
 ```
 
-    ## [1] 47.86924
+    ## [1] 47.69012
 
 ## Part II: Inference of cell-cell communication network
 
@@ -209,9 +209,9 @@ cellchat1 <- computeCommunProb(cellchat1, type = "truncatedMean", trim = 0.1,
 ```
 
     ## truncatedMean is used for calculating the average gene expression per cell group. 
-    ## [1] ">>> Run CellChat on spatial transcriptomics data using distances as constraints of the computed communication probability <<< [2025-01-25 09:03:34.600816]"
+    ## [1] ">>> Run CellChat on spatial transcriptomics data using distances as constraints of the computed communication probability <<< [2025-01-25 16:08:28.657664]"
     ## The input L-R pairs have both secreted signaling and contact-dependent signaling. Run CellChat in a contact-dependent manner for `Cell-Cell Contact` signaling, and in a diffusion manner based on the `interaction.range` for other L-R pairs. 
-    ## [1] ">>> CellChat inference is done. Parameter values are stored in `object@options$parameter` <<< [2025-01-25 09:03:50.011665]"
+    ## [1] ">>> CellChat inference is done. Parameter values are stored in `object@options$parameter` <<< [2025-01-25 16:08:48.88682]"
 
 ### Filter out the cell-cell communication if there are only few number of cells in certain cell groups
 
@@ -240,7 +240,7 @@ execution.time = Sys.time() - ptm
 print(as.numeric(execution.time, units = "secs"))
 ```
 
-    ## [1] 18.16438
+    ## [1] 23.02346
 
 ``` r
 ptm = Sys.time()
@@ -271,8 +271,8 @@ netVisual_heatmap(cellchat1, measure = "weight", color.heatmap = "Blues")
 
 ``` r
 # sub-dataset
-df.net_c16 <- subsetCommunication(cellchat1, sources.use = "2", targets.use = "1") ##gives the inferred cell-cell communications sending from cell groups 2 (dermis) to cell groups 1 (dysplastic).
-df.net_c61 <- subsetCommunication(cellchat1, sources.use = "1", targets.use = "2") ##gives the inferred cell-cell communications sending from cell groups 1 (dysplastic) to cell groups 2 (dermis).
+df.net_c12 <- subsetCommunication(cellchat1, sources.use = "2", targets.use = "1") ##gives the inferred cell-cell communications sending from cell groups 2 (dermis) to cell groups 1 (dysplastic).
+df.net_c21 <- subsetCommunication(cellchat1, sources.use = "1", targets.use = "2") ##gives the inferred cell-cell communications sending from cell groups 1 (dysplastic) to cell groups 2 (dermis).
 ```
 
 ## Visualize cell-cell communication mediated by multiple ligand-receptors or signaling pathways
@@ -345,26 +345,26 @@ ak2 <- FindClusters(ak2, verbose = FALSE)
 ak2 <- RunUMAP(ak2, reduction = "pca", dims = 1:30)
 ```
 
-    ## 09:04:48 UMAP embedding parameters a = 0.9922 b = 1.112
+    ## 16:10:18 UMAP embedding parameters a = 0.9922 b = 1.112
 
-    ## 09:04:48 Read 1505 rows and found 30 numeric columns
+    ## 16:10:18 Read 1505 rows and found 30 numeric columns
 
-    ## 09:04:48 Using Annoy for neighbor search, n_neighbors = 30
+    ## 16:10:18 Using Annoy for neighbor search, n_neighbors = 30
 
-    ## 09:04:48 Building Annoy index with metric = cosine, n_trees = 50
+    ## 16:10:18 Building Annoy index with metric = cosine, n_trees = 50
 
     ## 0%   10   20   30   40   50   60   70   80   90   100%
 
     ## [----|----|----|----|----|----|----|----|----|----|
 
     ## **************************************************|
-    ## 09:04:48 Writing NN index file to temp file /var/folders/nn/sjw17z350nbdmc7_r811zv4m0000gn/T//RtmpkqRb7F/fileed9a5231df97
-    ## 09:04:48 Searching Annoy index using 4 threads, search_k = 3000
-    ## 09:04:48 Annoy recall = 100%
-    ## 09:04:49 Commencing smooth kNN distance calibration using 4 threads with target n_neighbors = 30
-    ## 09:04:50 Initializing from normalized Laplacian + noise (using RSpectra)
-    ## 09:04:50 Commencing optimization for 500 epochs, with 60394 positive edges
-    ## 09:04:52 Optimization finished
+    ## 16:10:18 Writing NN index file to temp file /var/folders/nn/sjw17z350nbdmc7_r811zv4m0000gn/T//Rtmp1eyeo6/filefc40c911ebd
+    ## 16:10:18 Searching Annoy index using 4 threads, search_k = 3000
+    ## 16:10:19 Annoy recall = 100%
+    ## 16:10:19 Commencing smooth kNN distance calibration using 4 threads with target n_neighbors = 30
+    ## 16:10:21 Initializing from normalized Laplacian + noise (using RSpectra)
+    ## 16:10:21 Commencing optimization for 500 epochs, with 60394 positive edges
+    ## 16:10:25 Optimization finished
 
 ``` r
 color.use <- scPalette(nlevels(ak2)); names(color.use) <- levels(ak2)
@@ -458,7 +458,7 @@ execution.time = Sys.time() - ptm
 print(as.numeric(execution.time, units = "secs"))
 ```
 
-    ## [1] 91.21671
+    ## [1] 138.9459
 
 ## Part II: Inference of cell-cell communication network
 
@@ -471,9 +471,9 @@ cellchat2 <- computeCommunProb(cellchat2, type = "truncatedMean", trim = 0.1,
 ```
 
     ## truncatedMean is used for calculating the average gene expression per cell group. 
-    ## [1] ">>> Run CellChat on spatial transcriptomics data using distances as constraints of the computed communication probability <<< [2025-01-25 09:05:25.31657]"
+    ## [1] ">>> Run CellChat on spatial transcriptomics data using distances as constraints of the computed communication probability <<< [2025-01-25 16:11:14.354938]"
     ## The input L-R pairs have both secreted signaling and contact-dependent signaling. Run CellChat in a contact-dependent manner for `Cell-Cell Contact` signaling, and in a diffusion manner based on the `interaction.range` for other L-R pairs. 
-    ## [1] ">>> CellChat inference is done. Parameter values are stored in `object@options$parameter` <<< [2025-01-25 10:14:59.299842]"
+    ## [1] ">>> CellChat inference is done. Parameter values are stored in `object@options$parameter` <<< [2025-01-25 18:09:02.189342]"
 
 ### Filter out the cell-cell communication if there are only few number of cells in certain cell groups
 
@@ -502,7 +502,7 @@ execution.time = Sys.time() - ptm
 print(as.numeric(execution.time, units = "secs"))
 ```
 
-    ## [1] 4178.282
+    ## [1] 7074.494
 
 ``` r
 ptm = Sys.time()
@@ -533,8 +533,8 @@ netVisual_heatmap(cellchat2, measure = "weight", color.heatmap = "Blues")
 
 ``` r
 # sub-dataset
-df.net_c21 <- subsetCommunication(cellchat2, sources.use = "2", targets.use = "1") ##gives the inferred cell-cell communications sending from cell groups 2 (dermis) to cell groups 1 (dysplastic).
-df.net_c12 <- subsetCommunication(cellchat2, sources.use = "1", targets.use = "2") ##gives the inferred cell-cell communications sending from cell groups 1 (dysplastic) to cell groups 2 (dermis).
+df.net_c51 <- subsetCommunication(cellchat2, sources.use = "5", targets.use = "1") ##gives the inferred cell-cell communications sending from cell groups 5 (dermis) to cell groups 1 (dysplastic).
+df.net_c15 <- subsetCommunication(cellchat2, sources.use = "1", targets.use = "5") ##gives the inferred cell-cell communications sending from cell groups 1 (dysplastic) to cell groups 5 (dermis).
 ```
 
 ## Visualize cell-cell communication mediated by multiple ligand-receptors or signaling pathways
@@ -547,7 +547,7 @@ df.net_c12 <- subsetCommunication(cellchat2, sources.use = "1", targets.use = "2
 
 ``` r
 par(mfrow=c(1,1))
-netVisual_bubble(cellchat2, sources.use = "2", targets.use = c("1":"8"), remove.isolate = FALSE, dot.size.min = 5, dot.size.max = 10, font.size = 17, grid.on = TRUE, color.grid = "black")
+netVisual_bubble(cellchat2, sources.use = "5", targets.use = c("1":"8"), remove.isolate = FALSE, dot.size.min = 5, dot.size.max = 10, font.size = 17, grid.on = TRUE, color.grid = "black")
 ```
 
     ## Comparing communications on a single object
@@ -604,26 +604,26 @@ ak4_d <- FindClusters(ak4_d, verbose = FALSE)
 ak4_d <- RunUMAP(ak4_d, reduction = "pca", dims = 1:30)
 ```
 
-    ## 10:15:48 UMAP embedding parameters a = 0.9922 b = 1.112
+    ## 18:09:52 UMAP embedding parameters a = 0.9922 b = 1.112
 
-    ## 10:15:48 Read 921 rows and found 30 numeric columns
+    ## 18:09:52 Read 921 rows and found 30 numeric columns
 
-    ## 10:15:48 Using Annoy for neighbor search, n_neighbors = 30
+    ## 18:09:52 Using Annoy for neighbor search, n_neighbors = 30
 
-    ## 10:15:48 Building Annoy index with metric = cosine, n_trees = 50
+    ## 18:09:52 Building Annoy index with metric = cosine, n_trees = 50
 
     ## 0%   10   20   30   40   50   60   70   80   90   100%
 
     ## [----|----|----|----|----|----|----|----|----|----|
 
     ## **************************************************|
-    ## 10:15:48 Writing NN index file to temp file /var/folders/nn/sjw17z350nbdmc7_r811zv4m0000gn/T//RtmpkqRb7F/fileed9a39015460
-    ## 10:15:48 Searching Annoy index using 4 threads, search_k = 3000
-    ## 10:15:48 Annoy recall = 100%
-    ## 10:15:48 Commencing smooth kNN distance calibration using 4 threads with target n_neighbors = 30
-    ## 10:15:49 Initializing from normalized Laplacian + noise (using RSpectra)
-    ## 10:15:49 Commencing optimization for 500 epochs, with 34326 positive edges
-    ## 10:15:51 Optimization finished
+    ## 18:09:52 Writing NN index file to temp file /var/folders/nn/sjw17z350nbdmc7_r811zv4m0000gn/T//Rtmp1eyeo6/filefc4050cd95fb
+    ## 18:09:52 Searching Annoy index using 4 threads, search_k = 3000
+    ## 18:09:52 Annoy recall = 100%
+    ## 18:09:52 Commencing smooth kNN distance calibration using 4 threads with target n_neighbors = 30
+    ## 18:09:53 Initializing from normalized Laplacian + noise (using RSpectra)
+    ## 18:09:53 Commencing optimization for 500 epochs, with 34326 positive edges
+    ## 18:09:55 Optimization finished
 
 ``` r
 custom_colors <- c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3", "#FF7F00", "#BC9DCC", "#A65628", "#66C2A5", "#999999"); names(custom_colors) <- levels(ak4_d)
@@ -723,7 +723,7 @@ execution.time = Sys.time() - ptm
 print(as.numeric(execution.time, units = "secs"))
 ```
 
-    ## [1] 79.6165
+    ## [1] 79.64143
 
 ## Part II: Inference of cell-cell communication network
 
@@ -736,9 +736,9 @@ cellchat4d <- computeCommunProb(cellchat4d, type = "truncatedMean", trim = 0.1,
 ```
 
     ## truncatedMean is used for calculating the average gene expression per cell group. 
-    ## [1] ">>> Run CellChat on spatial transcriptomics data using distances as constraints of the computed communication probability <<< [2025-01-25 10:16:22.751505]"
+    ## [1] ">>> Run CellChat on spatial transcriptomics data using distances as constraints of the computed communication probability <<< [2025-01-25 18:10:25.641705]"
     ## The input L-R pairs have both secreted signaling and contact-dependent signaling. Run CellChat in a contact-dependent manner for `Cell-Cell Contact` signaling, and in a diffusion manner based on the `interaction.range` for other L-R pairs. 
-    ## [1] ">>> CellChat inference is done. Parameter values are stored in `object@options$parameter` <<< [2025-01-25 14:26:47.185775]"
+    ## [1] ">>> CellChat inference is done. Parameter values are stored in `object@options$parameter` <<< [2025-01-25 19:45:26.720944]"
 
 ### Filter out the cell-cell communication if there are only few number of cells in certain cell groups
 
@@ -767,7 +767,7 @@ execution.time = Sys.time() - ptm
 print(as.numeric(execution.time, units = "secs"))
 ```
 
-    ## [1] 15028.35
+    ## [1] 5704.99
 
 ``` r
 ptm = Sys.time()
